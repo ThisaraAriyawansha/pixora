@@ -1,9 +1,14 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import Navbar from '@/components/Navbar'
 import ImageCompressor from '@/components/ImageCompressor'
 import Footer from '@/components/Footer'
 import styles from './page.module.css'
+
+export const metadata: Metadata = {
+  alternates: { canonical: '/' },
+}
 
 const FEATURES = [
   {
@@ -44,8 +49,27 @@ const OUR_TOOLS = [
 ]
 
 export default function Home() {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'Pixora',
+    url: 'https://pixora-zeta-ten.vercel.app',
+    applicationCategory: 'MultimediaApplication',
+    operatingSystem: 'Any',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+    description: 'Compress, convert and resize images instantly in your browser. Free, no sign up, no uploads.',
+  }
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Navbar />
 
       <main className={styles.main}>

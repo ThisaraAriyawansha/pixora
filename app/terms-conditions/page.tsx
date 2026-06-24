@@ -1,6 +1,13 @@
+import type { Metadata } from 'next'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import styles from '../StaticPage.module.css'
+
+export const metadata: Metadata = {
+  title: 'Terms & Conditions',
+  description: 'The terms for using Pixora — kept short, because the tools are free.',
+  alternates: { canonical: '/terms-conditions' },
+}
 
 export default function TermsPage() {
   return (

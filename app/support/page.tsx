@@ -1,7 +1,14 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import styles from '../StaticPage.module.css'
+
+export const metadata: Metadata = {
+  title: 'Support & FAQ',
+  description: 'Answers to common questions about Pixora — pricing, privacy, supported file types and troubleshooting.',
+  alternates: { canonical: '/support' },
+}
 
 const FAQS = [
   {
@@ -27,8 +34,25 @@ const FAQS = [
 ]
 
 export default function SupportPage() {
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: FAQS.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.a,
+      },
+    })),
+  }
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       <Navbar />
 
       <main className={styles.main}>

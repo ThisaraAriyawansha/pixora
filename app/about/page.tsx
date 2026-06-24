@@ -1,7 +1,14 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import styles from '../StaticPage.module.css'
+
+export const metadata: Metadata = {
+  title: 'About',
+  description: 'Pixora is a set of free, privacy-first image tools that run entirely in your browser. Learn why we built it and how it works.',
+  alternates: { canonical: '/about' },
+}
 
 export default function AboutPage() {
   return (

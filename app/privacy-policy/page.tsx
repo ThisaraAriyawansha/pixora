@@ -1,6 +1,13 @@
+import type { Metadata } from 'next'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import styles from '../StaticPage.module.css'
+
+export const metadata: Metadata = {
+  title: 'Privacy Policy',
+  description: 'What Pixora does — and does not do — with your images and your data.',
+  alternates: { canonical: '/privacy-policy' },
+}
 
 export default function PrivacyPolicyPage() {
   return (

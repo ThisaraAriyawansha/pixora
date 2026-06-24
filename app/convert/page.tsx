@@ -1,8 +1,15 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import Navbar from '@/components/Navbar'
 import ImageConverter from '@/components/ImageConverter'
 import Footer from '@/components/Footer'
 import styles from '../ToolPage.module.css'
+
+export const metadata: Metadata = {
+  title: 'Convert Images — JPG, PNG, WEBP',
+  description: 'Convert images between JPG, PNG and WEBP instantly in your browser. Free, no sign up, no uploads.',
+  alternates: { canonical: '/convert' },
+}
 
 export default function ConvertPage() {
   return (
