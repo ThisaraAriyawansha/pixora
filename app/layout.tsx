@@ -11,13 +11,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Pixora - Image Tools',
     description: 'Compress, convert and resize images instantly in your browser.',
-    images: ['/img/og.png'],
+    images: ['/img/pixora-resized-og.png'],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Pixora - Image Tools',
     description: 'Compress, convert and resize images instantly in your browser.',
-    images: ['/img/og.png'],
+    images: ['/img/pixora-resized-og.png'],
   },
 }
 
