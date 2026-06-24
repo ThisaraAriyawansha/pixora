@@ -1,0 +1,82 @@
+.main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Hero */
+.hero {
+  padding: 6rem 0 4rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #a0a0a0;
+  margin-bottom: 1.25rem;
+}
+
+.heroTitle {
+  font-family: 'Milonga', serif;
+  font-size: clamp(3.5rem, 10vw, 6rem);
+  font-weight: 400;
+  color: #0a0a0a;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.25rem;
+}
+
+.heroSub {
+  font-size: 1.05rem;
+  color: #555555;
+  font-weight: 300;
+  line-height: 1.7;
+  max-width: 480px;
+  margin-bottom: 2rem;
+}
+
+.heroBadges {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.heroBadge {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  border: 1px solid #e0e0e0;
+  border-radius: 2px;
+  padding: 0.35rem 0.8rem;
+  color: #555555;
+}
+
+/* Tools */
+.tools {
+  padding-bottom: 4rem;
+}
+
+/* Footer */
+.footer {
+  border-top: 1px solid #e0e0e0;
+  padding: 2rem;
+  text-align: center;
+  font-size: 0.78rem;
+  color: #a0a0a0;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 640px) {
+  .main {
+    padding: 0 1.25rem;
+  }
+
+  .hero {
+    padding: 3.5rem 0 2.5rem;
+  }
+}

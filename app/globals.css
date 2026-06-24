@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Milonga&family=Prata&family=Poppins:wght@300;400;500;600&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --black: #0a0a0a;
+  --white: #fafafa;
+  --gray-100: #f0f0f0;
+  --gray-200: #e0e0e0;
+  --gray-400: #a0a0a0;
+  --gray-600: #555555;
+  --border: 1px solid #e0e0e0;
+  --border-dark: 1px solid #1a1a1a;
+  --radius: 2px;
+  --font-display: 'Milonga', serif;
+  --font-heading: 'Prata', serif;
+  --font-body: 'Poppins', sans-serif;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--white);
+  color: var(--black);
+  min-height: 100vh;
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+
+h2 {
+  font-family: var(--font-heading);
+  font-weight: 400;
+}
+
+h3, h4, h5, h6 {
+  font-family: var(--font-body);
+  font-weight: 500;
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+input, select {
+  font-family: var(--font-body);
+}
