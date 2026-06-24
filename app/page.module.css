@@ -55,9 +55,149 @@
   color: #555555;
 }
 
+.heroActions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2.25rem;
+  flex-wrap: wrap;
+}
+
+.heroBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 2rem;
+  background: #0a0a0a;
+  color: #fafafa;
+  border-radius: 2px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.heroBtn:hover {
+  background: #333;
+}
+
+.heroBtnOutline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 2rem;
+  background: transparent;
+  color: #0a0a0a;
+  border: 1px solid #0a0a0a;
+  border-radius: 2px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+
+.heroBtnOutline:hover {
+  background: #0a0a0a;
+  color: #fafafa;
+}
+
+/* Features */
+.features {
+  padding: 4rem 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.featureGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.featureCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.featureTitle {
+  font-family: 'Prata', serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: #0a0a0a;
+}
+
+.featureDesc {
+  font-size: 0.85rem;
+  color: #555555;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
 /* Tools */
 .tools {
-  padding-bottom: 4rem;
+  padding: 4rem 0;
+}
+
+/* More tools */
+.moreTools {
+  padding: 1rem 0 4rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.moreToolsTitle {
+  font-family: 'Prata', serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: #0a0a0a;
+  margin: 3rem 0 1.5rem;
+}
+
+.moreToolsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.toolCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.75rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.toolCard:hover {
+  border-color: #0a0a0a;
+  background: #f0f0f0;
+}
+
+.toolCardTitle {
+  font-family: 'Prata', serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #0a0a0a;
+}
+
+.toolCardDesc {
+  font-size: 0.85rem;
+  color: #555555;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.toolCardLink {
+  margin-top: 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #0a0a0a;
 }
 
 /* Footer */
@@ -78,5 +218,14 @@
 
   .hero {
     padding: 3.5rem 0 2.5rem;
+  }
+
+  .featureGrid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .moreToolsGrid {
+    grid-template-columns: 1fr;
   }
 }

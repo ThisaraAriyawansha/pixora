@@ -1,0 +1,84 @@
+.footer {
+  border-top: 1px solid #e0e0e0;
+  padding: 3.5rem 2rem 2rem;
+  text-align: center;
+}
+
+.brandRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 1.75rem;
+}
+
+.line {
+  flex: 1;
+  max-width: 320px;
+  height: 1px;
+  background: #e0e0e0;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.logo {
+  font-family: 'Milonga', serif;
+  font-size: 1.75rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: #0a0a0a;
+}
+
+.tagline {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #a0a0a0;
+}
+
+.copyright {
+  font-size: 0.78rem;
+  color: #a0a0a0;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+
+.credit {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: #a0a0a0;
+  font-weight: 300;
+}
+
+.credit a {
+  color: #555555;
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 1px solid #c0c0c0;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.credit a:hover {
+  color: #0a0a0a;
+  border-color: #0a0a0a;
+}
+
+@media (max-width: 640px) {
+  .footer {
+    padding: 2.5rem 1.25rem 1.5rem;
+  }
+
+  .brandRow {
+    gap: 1rem;
+  }
+
+  .line {
+    max-width: 60px;
+  }
+}
