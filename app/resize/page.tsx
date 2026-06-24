@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Navbar from '@/components/Navbar'
 import ImageResizer from '@/components/ImageResizer'
+import Footer from '@/components/Footer'
 import styles from '../ToolPage.module.css'
 
 export default function ResizePage() {
@@ -23,9 +24,7 @@ export default function ResizePage() {
         </div>
       </main>
 
-      <footer className={styles.footer}>
-        <p>© {new Date().getFullYear()} Pixora — all processing happens locally in your browser.</p>
-      </footer>
+      <Footer />
     </>
   )
 }

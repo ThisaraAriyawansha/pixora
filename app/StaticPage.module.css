@@ -35,8 +35,62 @@
   max-width: 480px;
 }
 
-.tools {
-  padding: 1rem 0 4rem;
+.content {
+  padding: 3rem 0 4rem;
+}
+
+.content h2 {
+  font-family: 'Prata', serif;
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: #0a0a0a;
+  margin: 2.5rem 0 0.9rem;
+}
+
+.content h2:first-child {
+  margin-top: 0;
+}
+
+.content p {
+  font-size: 0.92rem;
+  color: #555555;
+  font-weight: 300;
+  line-height: 1.75;
+  margin-bottom: 1rem;
+}
+
+.content ul,
+.content ol {
+  margin: 0 0 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.content li {
+  font-size: 0.92rem;
+  color: #555555;
+  font-weight: 300;
+  line-height: 1.65;
+}
+
+.content strong {
+  color: #0a0a0a;
+  font-weight: 500;
+}
+
+.content a {
+  color: #0a0a0a;
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 1px solid #0a0a0a;
+}
+
+.meta {
+  font-size: 0.75rem;
+  color: #a0a0a0;
+  font-weight: 300;
+  margin-top: -0.5rem;
 }
 
 .back {

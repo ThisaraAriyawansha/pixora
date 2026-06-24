@@ -1,6 +1,6 @@
 .footer {
   border-top: 1px solid #e0e0e0;
-  padding: 3.5rem 2rem 2rem;
+  padding: 4rem 3rem 2rem;
   text-align: center;
 }
 
@@ -9,7 +9,7 @@
   align-items: center;
   justify-content: center;
   gap: 2rem;
-  margin-bottom: 1.75rem;
+  margin-bottom: 3rem;
 }
 
 .line {
@@ -42,6 +42,117 @@
   color: #a0a0a0;
 }
 
+/* Columns */
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  align-items: start;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.linkList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  list-style: none;
+}
+
+.linkList a {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #555555;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.linkList a:hover {
+  color: #0a0a0a;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.socials {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.socialIcon {
+  display: flex;
+  color: #0a0a0a;
+}
+
+.socialIcon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.divider {
+  width: 1px;
+  height: 1.75rem;
+  background: #e0e0e0;
+}
+
+.newsletterTitle {
+  font-family: 'Prata', serif;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #0a0a0a;
+}
+
+.newsletterForm {
+  display: flex;
+  width: 100%;
+  max-width: 340px;
+}
+
+.newsletterInput {
+  flex: 1;
+  border: 1px solid #e0e0e0;
+  border-right: none;
+  border-radius: 2px 0 0 2px;
+  padding: 0.7rem 1rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: #0a0a0a;
+  background: #fafafa;
+  outline: none;
+  min-width: 0;
+}
+
+.newsletterInput:focus {
+  border-color: #0a0a0a;
+}
+
+.newsletterBtn {
+  border: 1px solid #0a0a0a;
+  border-radius: 0 2px 2px 0;
+  padding: 0.7rem 1.25rem;
+  background: #0a0a0a;
+  color: #fafafa;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.newsletterBtn:hover {
+  background: #333;
+}
+
 .copyright {
   font-size: 0.78rem;
   color: #a0a0a0;
@@ -69,9 +180,21 @@
   border-color: #0a0a0a;
 }
 
+@media (max-width: 768px) {
+  .columns {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 2.5rem;
+  }
+
+  .linkList {
+    align-items: center;
+  }
+}
+
 @media (max-width: 640px) {
   .footer {
-    padding: 2.5rem 1.25rem 1.5rem;
+    padding: 3rem 1.25rem 1.5rem;
   }
 
   .brandRow {

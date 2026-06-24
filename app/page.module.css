@@ -200,15 +200,93 @@
   color: #0a0a0a;
 }
 
-/* Footer */
-.footer {
+/* Our tools */
+.ourTools {
+  padding: 1rem 0 5rem;
   border-top: 1px solid #e0e0e0;
-  padding: 2rem;
-  text-align: center;
-  font-size: 0.78rem;
-  color: #a0a0a0;
+}
+
+.ourToolsTitle {
+  font-family: 'Prata', serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: #0a0a0a;
+  margin: 3rem 0 0.4rem;
+}
+
+.ourToolsSub {
+  font-size: 0.88rem;
+  color: #555555;
   font-weight: 300;
-  letter-spacing: 0.02em;
+  margin-bottom: 1.5rem;
+}
+
+.ourToolsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.ourToolCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.75rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.ourToolCard:hover {
+  border-color: #0a0a0a;
+  background: #f0f0f0;
+}
+
+.ourToolLogo {
+  flex-shrink: 0;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.ourToolInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.ourToolTitle {
+  font-family: 'Prata', serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: #0a0a0a;
+}
+
+.ourToolTag {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #a0a0a0;
+}
+
+.ourToolDesc {
+  font-size: 0.85rem;
+  color: #555555;
+  font-weight: 300;
+  line-height: 1.6;
+  margin-top: 0.2rem;
+}
+
+.ourToolLink {
+  flex-shrink: 0;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #0a0a0a;
+  align-self: center;
 }
 
 @media (max-width: 640px) {
@@ -227,5 +305,13 @@
 
   .moreToolsGrid {
     grid-template-columns: 1fr;
+  }
+
+  .ourToolCard {
+    flex-direction: column;
+  }
+
+  .ourToolLink {
+    align-self: flex-start;
   }
 }

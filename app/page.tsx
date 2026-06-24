@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import Navbar from '@/components/Navbar'
 import ImageCompressor from '@/components/ImageCompressor'
 import Footer from '@/components/Footer'
@@ -29,6 +30,16 @@ const OTHER_TOOLS = [
     href: '/resize',
     title: 'Resize',
     desc: 'Set exact dimensions while keeping the aspect ratio intact.',
+  },
+]
+
+const OUR_TOOLS = [
+  {
+    href: 'https://infinitysub.vercel.app/',
+    logo: '/img/InfinitySub.png',
+    title: 'InfinitySub',
+    tag: 'Subtitle Translator',
+    desc: 'Translate subtitle files into dozens of languages in seconds, free and online.',
   },
 ]
 
@@ -83,6 +94,37 @@ export default function Home() {
                 <p className={styles.toolCardDesc}>{tool.desc}</p>
                 <span className={styles.toolCardLink}>Open →</span>
               </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* Our other tools */}
+        <section className={styles.ourTools}>
+          <h2 className={styles.ourToolsTitle}>Our Tools</h2>
+          <p className={styles.ourToolsSub}>Other free tools built by the PlexCode team.</p>
+          <div className={styles.ourToolsGrid}>
+            {OUR_TOOLS.map((tool) => (
+              <a
+                key={tool.href}
+                href={tool.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.ourToolCard}
+              >
+                <Image
+                  src={tool.logo}
+                  alt={`${tool.title} logo`}
+                  width={56}
+                  height={56}
+                  className={styles.ourToolLogo}
+                />
+                <div className={styles.ourToolInfo}>
+                  <h3 className={styles.ourToolTitle}>{tool.title}</h3>
+                  <p className={styles.ourToolTag}>{tool.tag}</p>
+                  <p className={styles.ourToolDesc}>{tool.desc}</p>
+                </div>
+                <span className={styles.ourToolLink}>Visit →</span>
+              </a>
             ))}
           </div>
         </section>
