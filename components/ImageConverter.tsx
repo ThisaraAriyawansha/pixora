@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import imageCompression from 'browser-image-compression'
 import styles from './Tool.module.css'
 import { extFromType, formatBytes, getImageDimensions, labelFromType, validateImageFile } from '@/lib/imageUtils'
@@ -8,6 +8,7 @@ const FORMATS = ['image/jpeg', 'image/png', 'image/webp']
 type Dimensions = { width: number; height: number }
 
 export default function ImageConverter() {
+  const fileInputRef = useRef<HTMLInputElement>(null)
   const [file, setFile] = useState<File | null>(null)
   const [preview, setPreview] = useState<string | null>(null)
   const [dimensions, setDimensions] = useState<Dimensions | null>(null)
@@ -102,7 +103,17 @@ export default function ImageConverter() {
           setIsDragOver(true)
         }}
         onDragLeave={() => setIsDragOver(false)}
+        onClick={() => {
+          if (!file) fileInputRef.current?.click()
+        }}
       >
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          onChange={handleFile}
+          className={styles.fileInput}
+        />
         {file ? (
           <div className={styles.dropzoneInner}>
             <button className={styles.removeBtn} onClick={reset} aria-label="Remove image" type="button">×</button>
@@ -116,7 +127,7 @@ export default function ImageConverter() {
         ) : (
           <>
             <span className={styles.dropIcon}>↑</span>
-            <p className={styles.dropText}>Drop image here or <label className={styles.fileLabel}>browse<input type="file" accept="image/*" onChange={handleFile} className={styles.fileInput} /></label></p>
+            <p className={styles.dropText}>Drop image here or <span className={styles.fileLabel}>browse</span></p>
             <p className={styles.hint}>JPG, PNG, WEBP, GIF or AVIF — up to 25 MB</p>
           </>
         )}
