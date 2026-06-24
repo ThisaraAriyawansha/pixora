@@ -30,13 +30,13 @@ export const metadata: Metadata = {
     url: SITE_URL,
     title: 'Pixora - Image Tools',
     description: DEFAULT_DESCRIPTION,
-    images: ['/img/og_img_2.png'],
+    images: ['/img/og_img_3.png'],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Pixora - Image Tools',
     description: DEFAULT_DESCRIPTION,
-    images: ['/img/og_img_2.png'],
+    images: ['/img/og_img_3.png'],
   },
 }
 
