@@ -21,7 +21,7 @@ const FAQS = [
   },
   {
     q: 'What file types are supported?',
-    a: 'JPG, PNG, WEBP, GIF and AVIF, up to 25 MB per file.',
+    a: 'JPG, PNG, WEBP, GIF and AVIF, up to 50 MB per file.',
   },
   {
     q: 'Why did my image fail to process?',

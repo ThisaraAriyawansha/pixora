@@ -269,7 +269,75 @@
   font-weight: 300;
 }
 
+/* Multi-file grid */
+.fileGrid {
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1rem;
+}
+
+.fileCard {
+  position: relative;
+  border: 1px solid #e0e0e0;
+  border-radius: 2px;
+  padding: 1rem;
+  background: #fafafa;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.fileCardThumb {
+  width: 100%;
+  height: 100px;
+  object-fit: contain;
+  border-radius: 2px;
+}
+
+.fileCardName {
+  font-size: 0.8rem;
+  color: #0a0a0a;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fileCardResult {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
 /* Buttons */
+.btnRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.btnGhost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  color: #555555;
+  border: none;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.btnGhost:hover {
+  color: #0a0a0a;
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -458,5 +526,13 @@
 
   .dimX {
     display: none;
+  }
+
+  .fileGrid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  }
+
+  .btnRow {
+    flex-wrap: wrap;
   }
 }

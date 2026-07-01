@@ -128,7 +128,7 @@ export default function ImageConverter() {
           <>
             <span className={styles.dropIcon}>↑</span>
             <p className={styles.dropText}>Drop image here or <span className={styles.fileLabel}>browse</span></p>
-            <p className={styles.hint}>JPG, PNG, WEBP, GIF or AVIF — up to 25 MB</p>
+            <p className={styles.hint}>JPG, PNG, WEBP, GIF or AVIF — up to 50 MB</p>
           </>
         )}
       </div>

@@ -1,4 +1,4 @@
-export const MAX_FILE_SIZE = 25 * 1024 * 1024
+export const MAX_FILE_SIZE = 50 * 1024 * 1024
 export const ACCEPTED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/avif']
 
 const EXT_BY_TYPE: Record<string, string> = {
