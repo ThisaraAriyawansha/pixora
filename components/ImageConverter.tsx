@@ -2,9 +2,10 @@
 import { useRef, useState } from 'react'
 import imageCompression from 'browser-image-compression'
 import styles from './Tool.module.css'
-import { extFromType, formatBytes, getImageDimensions, labelFromType, validateImageFile } from '@/lib/imageUtils'
+import { ACCEPTED_TYPES, SVG_TYPE, extFromType, formatBytes, getImageDimensions, labelFromType, validateImageFile } from '@/lib/imageUtils'
 
 const FORMATS = ['image/jpeg', 'image/png', 'image/webp']
+const CONVERTER_ACCEPTED_TYPES = [...ACCEPTED_TYPES, SVG_TYPE]
 type Dimensions = { width: number; height: number }
 type ItemStatus = 'pending' | 'converting' | 'done' | 'error'
 
@@ -37,7 +38,7 @@ export default function ImageConverter() {
     const accepted: ConvertItem[] = []
 
     for (const file of files) {
-      const validationError = validateImageFile(file)
+      const validationError = validateImageFile(file, CONVERTER_ACCEPTED_TYPES)
       if (validationError) {
         rejected.push(`${file.name}: ${validationError}`)
         continue
@@ -180,7 +181,7 @@ export default function ImageConverter() {
           <>
             <span className={styles.dropIcon}>↑</span>
             <p className={styles.dropText}>Drop images here or <span className={styles.fileLabel}>browse</span></p>
-            <p className={styles.hint}>JPG, PNG, WEBP, GIF or AVIF — up to 50 MB each. You can select multiple files at once.</p>
+            <p className={styles.hint}>JPG, PNG, WEBP, GIF, AVIF or SVG — up to 50 MB each. You can select multiple files at once.</p>
           </>
         )}
       </div>
