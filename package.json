@@ -5,13 +5,17 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "postinstall": "node scripts/copy-ffmpeg-core.js"
   },
   "dependencies": {
     "next": "14.2.5",
     "react": "^18",
     "react-dom": "^18",
-    "browser-image-compression": "^2.0.2"
+    "browser-image-compression": "^2.0.2",
+    "@ffmpeg/ffmpeg": "0.12.10",
+    "@ffmpeg/core": "0.12.10",
+    "@ffmpeg/util": "^0.12.1"
   },
   "devDependencies": {
     "@types/node": "^20",

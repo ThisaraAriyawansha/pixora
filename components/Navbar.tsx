@@ -7,6 +7,7 @@ const LINKS = [
   { href: '/', label: 'Compress' },
   { href: '/convert', label: 'Convert' },
   { href: '/resize', label: 'Resize' },
+  { href: '/video', label: 'Video' },
 ]
 
 export default function Navbar() {

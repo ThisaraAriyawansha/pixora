@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 const FEATURES = [
   {
     title: 'Privacy first',
-    desc: 'Images never leave your device. Every tool runs fully client-side in the browser.',
+    desc: 'Your files never leave your device. Every tool runs fully client-side in the browser.',
   },
   {
     title: 'Lightning fast',
@@ -35,6 +35,11 @@ const OTHER_TOOLS = [
     href: '/resize',
     title: 'Resize',
     desc: 'Set exact dimensions while keeping the aspect ratio intact.',
+  },
+  {
+    href: '/video',
+    title: 'Video',
+    desc: 'Shrink video file size instantly, right in your browser.',
   },
 ]
 
@@ -61,7 +66,7 @@ export default function Home() {
       price: '0',
       priceCurrency: 'USD',
     },
-    description: 'Compress, convert and resize images instantly in your browser. Free, no sign up, no uploads.',
+    description: 'Compress, convert and resize images, and compress video, instantly in your browser. Free, no sign up, no uploads.',
   }
 
   return (
