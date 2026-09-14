@@ -7,6 +7,7 @@ import { getFFmpeg, setProgressHandler } from '@/lib/ffmpegClient'
 import {
   ACCEPTED_VIDEO_TYPES,
   MAX_VIDEO_DURATION_SEC,
+  RESOLUTION_PRESETS,
   VideoMeta,
   crfFromQuality,
   extFromVideoType,
@@ -15,9 +16,12 @@ import {
   guessVideoTypeFromName,
   labelFromVideoType,
   validateVideoFile,
+  videoBitrateForTargetSize,
 } from '@/lib/videoUtils'
 
 type ItemStatus = 'pending' | 'compressing' | 'done' | 'error'
+
+type CompressionMethod = 'percentage' | 'sizeMB' | 'quality' | 'resolution' | 'bitrate'
 
 type VideoItem = {
   id: string
@@ -37,7 +41,13 @@ export default function VideoCompressor() {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const idCounter = useRef(0)
   const [items, setItems] = useState<VideoItem[]>([])
+  const [method, setMethod] = useState<CompressionMethod>('percentage')
   const [quality, setQuality] = useState(70)
+  const [targetPct, setTargetPct] = useState(50)
+  const [targetSizeMB, setTargetSizeMB] = useState(10)
+  const [targetResolution, setTargetResolution] = useState('720')
+  const [targetBitrate, setTargetBitrate] = useState(2000)
+  const [capResolution, setCapResolution] = useState(true)
   const [isProcessing, setIsProcessing] = useState(false)
   const [isDragOver, setIsDragOver] = useState(false)
   const [globalError, setGlobalError] = useState<string | null>(null)
@@ -166,6 +176,42 @@ export default function VideoCompressor() {
     setGlobalError(null)
   }
 
+  const SPEED_CAP_HEIGHT = 720
+
+  const buildVideoArgs = (item: VideoItem): string[] => {
+    const duration = item.meta?.duration ?? 0
+    const capArgs = capResolution ? ['-vf', `scale=-2:'min(ih,${SPEED_CAP_HEIGHT})'`] : []
+
+    switch (method) {
+      case 'percentage': {
+        const targetBytes = item.file.size * (targetPct / 100)
+        const kbps = videoBitrateForTargetSize(targetBytes, duration)
+        return ['-c:v', 'libx264', '-b:v', `${kbps}k`, '-maxrate', `${kbps}k`, '-bufsize', `${kbps * 2}k`, '-preset', 'ultrafast', ...capArgs]
+      }
+      case 'sizeMB': {
+        const targetBytes = targetSizeMB * 1024 * 1024
+        const kbps = videoBitrateForTargetSize(targetBytes, duration)
+        return ['-c:v', 'libx264', '-b:v', `${kbps}k`, '-maxrate', `${kbps}k`, '-bufsize', `${kbps * 2}k`, '-preset', 'ultrafast', ...capArgs]
+      }
+      case 'bitrate': {
+        return ['-c:v', 'libx264', '-b:v', `${targetBitrate}k`, '-maxrate', `${targetBitrate}k`, '-bufsize', `${targetBitrate * 2}k`, '-preset', 'ultrafast', ...capArgs]
+      }
+      case 'resolution': {
+        const preset = RESOLUTION_PRESETS.find((p) => p.value === targetResolution)
+        const args = ['-c:v', 'libx264', '-crf', String(crfFromQuality(70)), '-preset', 'ultrafast']
+        if (preset?.height) {
+          args.push('-vf', `scale=-2:'min(ih,${preset.height})'`)
+        }
+        return args
+      }
+      case 'quality':
+      default: {
+        const crf = crfFromQuality(quality)
+        return ['-c:v', 'libx264', '-crf', String(crf), '-preset', 'ultrafast', ...capArgs]
+      }
+    }
+  }
+
   const compressAll = async () => {
     const pending = items.filter((item) => item.status === 'pending')
     if (!pending.length) return
@@ -176,8 +222,6 @@ export default function VideoCompressor() {
       setLoadingEngine(true)
       const ffmpeg = await getFFmpeg()
       setLoadingEngine(false)
-
-      const crf = crfFromQuality(quality)
 
       for (const item of pending) {
         setItems((prev) => prev.map((it) => (it.id === item.id ? { ...it, status: 'compressing', progress: 0, error: null } : it)))
@@ -191,9 +235,7 @@ export default function VideoCompressor() {
           await ffmpeg.writeFile(inputName, await fetchFile(item.file))
           await ffmpeg.exec([
             '-i', inputName,
-            '-c:v', 'libx264',
-            '-crf', String(crf),
-            '-preset', 'veryfast',
+            ...buildVideoArgs(item),
             '-c:a', 'aac',
             '-b:a', '128k',
             '-movflags', '+faststart',
@@ -388,18 +430,111 @@ export default function VideoCompressor() {
 
       {items.length > 0 && (
         <div className={styles.controls}>
-          <div className={styles.sliderRow}>
-            <label className={styles.sliderLabel}>Quality — {quality}%</label>
-            <input
-              type="range"
-              min={10}
-              max={100}
-              value={quality}
-              onChange={(e) => setQuality(Number(e.target.value))}
-              className={styles.slider}
-            />
-            <p className={styles.hint}>Lower quality means a smaller file. 70% is a good balance for most videos. Output is always MP4 (H.264).</p>
+          <div className={styles.selectRow}>
+            <label className={styles.selectLabel}>Compression Method</label>
+            <select
+              value={method}
+              onChange={(e) => setMethod(e.target.value as CompressionMethod)}
+              className={styles.select}
+            >
+              <option value="percentage">Target a file size (Percentage)</option>
+              <option value="sizeMB">Target a file size (MB)</option>
+              <option value="quality">Target a video quality</option>
+              <option value="resolution">Target a video resolution</option>
+              <option value="bitrate">Target a max bitrate</option>
+            </select>
           </div>
+
+          {method === 'percentage' && (
+            <div className={styles.sliderRow}>
+              <label className={styles.sliderLabel}>Select Target Size — {targetPct}%</label>
+              <input
+                type="range"
+                min={10}
+                max={90}
+                value={targetPct}
+                onChange={(e) => setTargetPct(Number(e.target.value))}
+                className={styles.slider}
+              />
+              <p className={styles.hint}>Lower values compress more. For example, a 100 MB file would become {Math.round(100 * (targetPct / 100))} MB at {targetPct}%.</p>
+            </div>
+          )}
+
+          {method === 'sizeMB' && (
+            <div className={styles.sliderRow}>
+              <label className={styles.sliderLabel}>Target file size (MB)</label>
+              <input
+                type="number"
+                min={1}
+                value={targetSizeMB}
+                onChange={(e) => setTargetSizeMB(Math.max(1, Number(e.target.value)))}
+                className={styles.dimInput}
+              />
+              <p className={styles.hint}>Pixora will aim to shrink each video to about this size. Actual results can vary slightly.</p>
+            </div>
+          )}
+
+          {method === 'quality' && (
+            <div className={styles.sliderRow}>
+              <label className={styles.sliderLabel}>Quality — {quality}%</label>
+              <input
+                type="range"
+                min={10}
+                max={100}
+                value={quality}
+                onChange={(e) => setQuality(Number(e.target.value))}
+                className={styles.slider}
+              />
+              <p className={styles.hint}>Lower quality means a smaller file. 70% is a good balance for most videos.</p>
+            </div>
+          )}
+
+          {method === 'resolution' && (
+            <div className={styles.selectRow}>
+              <label className={styles.selectLabel}>Resolution</label>
+              <select
+                value={targetResolution}
+                onChange={(e) => setTargetResolution(e.target.value)}
+                className={styles.select}
+              >
+                {RESOLUTION_PRESETS.map((preset) => (
+                  <option key={preset.value} value={preset.value}>{preset.label}</option>
+                ))}
+              </select>
+            </div>
+          )}
+
+          {method === 'bitrate' && (
+            <div className={styles.sliderRow}>
+              <label className={styles.sliderLabel}>Max bitrate (kbps)</label>
+              <input
+                type="number"
+                min={100}
+                value={targetBitrate}
+                onChange={(e) => setTargetBitrate(Math.max(100, Number(e.target.value)))}
+                className={styles.dimInput}
+              />
+              <p className={styles.hint}>Caps the video bitrate at this value. Lower bitrate means a smaller file.</p>
+            </div>
+          )}
+
+          {method !== 'resolution' && (
+            <div className={styles.selectRow}>
+              <label className={styles.selectLabel} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
+                <input
+                  type="checkbox"
+                  checked={capResolution}
+                  onChange={(e) => setCapResolution(e.target.checked)}
+                />
+                Speed up (cap resolution at 720p)
+              </label>
+            </div>
+          )}
+          {method !== 'resolution' && capResolution && (
+            <p className={styles.hint}>Encoding at a smaller frame size is the biggest speed lever in the browser — much bigger than preset or bitrate settings. Turn this off to keep the original resolution at the cost of a slower encode.</p>
+          )}
+
+          <p className={styles.hint}>Output is always MP4 (H.264).</p>
 
           <div className={styles.btnRow}>
             <button className={styles.btn} onClick={compressAll} disabled={isProcessing || pendingCount === 0}>

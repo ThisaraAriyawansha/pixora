@@ -5,6 +5,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
   padding: 1.25rem 3rem;
   background: #fafafa;
   border-bottom: 1px solid #e0e0e0;
@@ -17,12 +18,23 @@
   color: #0a0a0a;
   letter-spacing: -0.01em;
   text-decoration: none;
+  flex-shrink: 0;
 }
 
 .links {
   display: flex;
   gap: 2.5rem;
   list-style: none;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.links::-webkit-scrollbar {
+  display: none;
+}
+
+.links li {
+  flex-shrink: 0;
 }
 
 .links a {
@@ -46,11 +58,120 @@
   padding-bottom: 2px;
 }
 
+.menuBtn {
+  display: none;
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+}
+
+.menuBtn span,
+.menuBtn span::before,
+.menuBtn span::after {
+  content: '';
+  position: absolute;
+  left: 0.35rem;
+  right: 0.35rem;
+  height: 1px;
+  background: #0a0a0a;
+  transition: transform 0.2s ease, opacity 0.2s ease, top 0.2s ease;
+}
+
+.menuBtn span {
+  top: 50%;
+}
+
+.menuBtn span::before {
+  top: -7px;
+}
+
+.menuBtn span::after {
+  top: 7px;
+}
+
+.menuBtn .iconOpen {
+  background: transparent;
+}
+
+.menuBtn .iconOpen::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+.menuBtn .iconOpen::after {
+  top: 0;
+  transform: rotate(-45deg);
+}
+
+.mobileMenu {
+  display: none;
+}
+
 @media (max-width: 640px) {
   .nav {
     padding: 1rem 1.25rem;
   }
+
   .links {
-    gap: 1.25rem;
+    display: none;
+  }
+
+  .menuBtn {
+    display: block;
+  }
+
+  .mobileMenu {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 80vh;
+    overflow-y: auto;
+    background: #fafafa;
+    border-bottom: 1px solid #e0e0e0;
+    transform: translateY(-8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.18s ease, opacity 0.18s ease;
+  }
+
+  .mobileMenuOpen {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobileMenu ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mobileMenu li {
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .mobileMenu a {
+    display: block;
+    padding: 1rem 1.25rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #555555;
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .mobileMenu .linkActive {
+    color: #0a0a0a !important;
+    border-bottom: none;
+    background: #f0f0f0;
   }
 }

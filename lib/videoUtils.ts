@@ -71,3 +71,25 @@ export function crfFromQuality(quality: number) {
   const crf = 32 - ((quality - 10) * (32 - 18)) / 90
   return Math.round(Math.min(32, Math.max(18, crf)))
 }
+
+export const AUDIO_BITRATE_KBPS = 128
+export const MIN_VIDEO_BITRATE_KBPS = 150
+
+export function videoBitrateForTargetSize(targetBytes: number, durationSec: number) {
+  if (!durationSec || durationSec <= 0) return MIN_VIDEO_BITRATE_KBPS
+  const totalKbps = (targetBytes * 8) / durationSec / 1000
+  return Math.max(MIN_VIDEO_BITRATE_KBPS, Math.round(totalKbps - AUDIO_BITRATE_KBPS))
+}
+
+export type ResolutionPreset = { value: string; label: string; height: number | null }
+
+export const RESOLUTION_PRESETS: ResolutionPreset[] = [
+  { value: 'source', label: 'Source (no change)', height: null },
+  { value: '2160', label: '2160p (4K)', height: 2160 },
+  { value: '1440', label: '1440p (2K)', height: 1440 },
+  { value: '1080', label: '1080p (Full HD)', height: 1080 },
+  { value: '720', label: '720p (HD)', height: 720 },
+  { value: '480', label: '480p (SD)', height: 480 },
+  { value: '360', label: '360p', height: 360 },
+  { value: '240', label: '240p', height: 240 },
+]
