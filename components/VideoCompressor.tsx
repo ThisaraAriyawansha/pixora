@@ -5,12 +5,14 @@ import styles from './Tool.module.css'
 import { formatBytes } from '@/lib/imageUtils'
 import { getFFmpeg, setProgressHandler } from '@/lib/ffmpegClient'
 import {
+  ACCEPTED_VIDEO_TYPES,
   MAX_VIDEO_DURATION_SEC,
   VideoMeta,
   crfFromQuality,
   extFromVideoType,
   formatDuration,
   getVideoMeta,
+  guessVideoTypeFromName,
   labelFromVideoType,
   validateVideoFile,
 } from '@/lib/videoUtils'
@@ -40,6 +42,10 @@ export default function VideoCompressor() {
   const [isDragOver, setIsDragOver] = useState(false)
   const [globalError, setGlobalError] = useState<string | null>(null)
   const [loadingEngine, setLoadingEngine] = useState(false)
+  const [driveUrl, setDriveUrl] = useState('')
+  const [isFetchingDrive, setIsFetchingDrive] = useState(false)
+  const [driveProgress, setDriveProgress] = useState(0)
+  const [driveError, setDriveError] = useState<string | null>(null)
 
   const addFiles = (fileList: FileList | File[] | null) => {
     if (!fileList) return
@@ -104,6 +110,55 @@ export default function VideoCompressor() {
 
   const removeItem = (id: string) => {
     setItems((prev) => prev.filter((item) => item.id !== id))
+  }
+
+  const fetchFromDrive = async () => {
+    const trimmed = driveUrl.trim()
+    if (!trimmed || isFetchingDrive) return
+
+    setDriveError(null)
+    setIsFetchingDrive(true)
+    setDriveProgress(0)
+
+    try {
+      const res = await fetch(`/api/drive-fetch?url=${encodeURIComponent(trimmed)}`)
+      if (!res.ok || !res.body) {
+        const data = await res.json().catch(() => null)
+        throw new Error(data?.error || 'Could not fetch that file from Google Drive.')
+      }
+
+      const contentLength = Number(res.headers.get('content-length') || 0)
+      const reader = res.body.getReader()
+      const chunks: Uint8Array[] = []
+      let received = 0
+
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+        chunks.push(value)
+        received += value.length
+        setDriveProgress(contentLength ? Math.min(1, received / contentLength) : 0)
+      }
+
+      const disposition = res.headers.get('content-disposition') || ''
+      const nameMatch = disposition.match(/filename="?([^";]+)"?/)
+      const filename = nameMatch ? nameMatch[1] : `drive-video-${Date.now()}.mp4`
+
+      let type = res.headers.get('content-type') || ''
+      if (!ACCEPTED_VIDEO_TYPES.includes(type)) {
+        type = guessVideoTypeFromName(filename) || type
+      }
+
+      const blob = new Blob(chunks as BlobPart[], { type })
+      const file = new File([blob], filename, { type })
+      addFiles([file])
+      setDriveUrl('')
+    } catch (err) {
+      setDriveError(err instanceof Error ? err.message : 'Could not fetch that file from Google Drive.')
+    } finally {
+      setIsFetchingDrive(false)
+      setDriveProgress(0)
+    }
   }
 
   const resetAll = () => {
@@ -242,6 +297,31 @@ export default function VideoCompressor() {
           </>
         )}
       </div>
+
+      <div className={styles.urlDivider}>or</div>
+      <div className={styles.urlRow}>
+        <input
+          type="text"
+          className={styles.urlInput}
+          placeholder="Paste a Google Drive share link"
+          value={driveUrl}
+          onChange={(e) => setDriveUrl(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') fetchFromDrive()
+          }}
+          disabled={isFetchingDrive}
+        />
+        <button
+          type="button"
+          className={styles.btnOutline}
+          onClick={fetchFromDrive}
+          disabled={isFetchingDrive || !driveUrl.trim()}
+        >
+          {isFetchingDrive ? `Fetching… ${Math.round(driveProgress * 100)}%` : 'Fetch from Drive'}
+        </button>
+      </div>
+      <p className={styles.hint}>File must be shared as &quot;Anyone with the link&quot;. It's pulled straight into your browser — the compressed result stays yours to download.</p>
+      {driveError && <div className={styles.error}>{driveError}</div>}
 
       {globalError && <div className={styles.error}>{globalError}</div>}
       {loadingEngine && <p className={styles.hint}>Loading video engine… this only happens once.</p>}

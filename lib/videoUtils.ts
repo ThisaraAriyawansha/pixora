@@ -13,6 +13,18 @@ export function extFromVideoType(type: string) {
   return EXT_BY_TYPE[type] ?? 'mp4'
 }
 
+const TYPE_BY_EXT: Record<string, string> = {
+  mp4: 'video/mp4',
+  webm: 'video/webm',
+  mov: 'video/quicktime',
+  mkv: 'video/x-matroska',
+}
+
+export function guessVideoTypeFromName(name: string): string | null {
+  const ext = name.split('.').pop()?.toLowerCase()
+  return ext ? TYPE_BY_EXT[ext] ?? null : null
+}
+
 export function labelFromVideoType(type: string) {
   return extFromVideoType(type).toUpperCase()
 }
