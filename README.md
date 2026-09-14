@@ -1,10 +1,10 @@
 # Pixora
 
-Fast and modern online image compressor, converter, and resizer built for seamless image optimization — all processing happens client-side in the browser.
+Fast and modern online image and video compressor, converter, and resizer built for seamless media optimization — all processing happens client-side in the browser.
 
 ## Features
 
-- **Compress** — Reduce image file size while preserving quality
+- **Compress** — Reduce image and video file size while preserving quality
 - **Convert** — Convert images between formats
 - **Resize** — Resize images to custom dimensions
 
@@ -12,6 +12,7 @@ Fast and modern online image compressor, converter, and resizer built for seamle
 
 - [Next.js 14](https://nextjs.org/) (App Router) + React 18 + TypeScript
 - [browser-image-compression](https://www.npmjs.com/package/browser-image-compression) for client-side image processing
+- [FFmpeg (ffmpeg.wasm)](https://ffmpegwasm.netlify.app/) for client-side video compression
 
 ## Getting Started
 
@@ -33,8 +34,8 @@ Open [http://localhost:3000](http://localhost:3000) to view the app.
 ## Project Structure
 
 ```
-app/            Routes (home, convert, resize, about, contact, etc.)
-components/     Reusable UI components (ImageCompressor, ImageConverter, ImageResizer, Navbar, Footer)
+app/            Routes (home, convert, resize, video, about, contact, etc.)
+components/     Reusable UI components (ImageCompressor, ImageConverter, ImageResizer, VideoCompressor, Navbar, Footer)
 lib/            Shared utilities
 public/         Static assets
 ```
